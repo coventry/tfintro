@@ -1,0 +1,188 @@
+#+Title: Tensorflow: A Practical Introduction
+#+Author: Alex Coventry
+#+Email: alx@mit.edu
+
+#+OPTIONS: reveal_center:t reveal_progress:t reveal_history:nil reveal_control:t
+#+OPTIONS: reveal_rolling_links:t reveal_keyboard:t reveal_overview:t num:nil
+#+OPTIONS: reveal_width:1200 reveal_height:800
+#+OPTIONS: toc:1
+#+REVEAL_MARGIN: 0.1
+#+REVEAL_MIN_SCALE: 0.5
+#+REVEAL_MAX_SCALE: 2.5
+#+REVEAL_TRANS: cube
+#+REVEAL_THEME: moon
+#+REVEAL_HLEVEL: 2
+#+REVEAL_HEAD_PREAMBLE: <meta name="description" content="Tensorflow Introduction.">
+#+REVEAL_POSTAMBLE: <p> Created by Alex Coventry. </p>
+#+REVEAL_PLUGINS: (markdown notes)
+#+REVEAL_EXTRA_CSS: ./local.css
+
+* What is Deep Learning?
+
+- Automatically learning implicit representations from training data.
+- Layering increasingly abstract representations on top of each other.
+
+#+attr_html: :width 75% :style margin:0px auto;display:block
+#+attr_html: :width 75% :style margin:0px auto;display:block
+[[./cnn_filters.png]]
+
+(http://www.iro.umontreal.ca/~bengioy/talks/DL-Tutorial-NIPS2015.pdf)
+
+
+* What is Tensorflow?
+
+- A Python library for Machine Learning which emphasizes Deep Learning models.
+
+- [[http://playground.tensorflow.org/#activation=tanh&batchSize=10&dataset=circle&regDataset=reg-plane&learningRate=0.03&regularizationRate=0&noise=0&networkShape=3,2&seed=0.35219&showTestData=true&discretize=false&percTrainData=50&x=true&y=true&xTimesY=false&xSquared=false&ySquared=false&cosX=false&sinX=false&cosY=false&sinY=false&collectStats=false&problem=classification&initZero=false&hideText=false][Example]].
+
+- A large suite of optimization algorithms and statistical tools.
+
+- Environment-agnostic notation for large classes of ML-related calculations:
+  Same program can run on a single CPU, a cluster, or a GPU, with minor
+  adjustments.
+
+- _Tensor_flow because many calculations are linear, so represented by tensors
+  (multi-dimensional arrays of numbers.)
+
+- Tensor/flow/ because information flows from one layer to the next (forwards
+  and backwards) via the tensors.
+
+* What's the goal of this meetup group?
+
+- Practical demonstrations of how to use Tensorflow for Deep Learning.
+
+- The goal is that you should be able to run the demostrations yourself, and
+  play with them to learn more.
+
+- In the end, we should be able to make our own images like this, among other
+  things. (But not this week.)
+
+#+attr_html: :width 75% :style margin:0px auto;display:block
+[[https://tensortalk.com/static/img_cache/combined_pieappleclose.jpg]]
+
+* Why run your own Tensorflow machine on AWS?
+
+- Costs
+
+  - Financial: At least 65c/hour, plus a few dollars a month for storage.
+
+  - Time / Complexity: You have to learn a few moving parts, and keep them in sync.
+
+- Benefits
+
+  - Main issue is hardware: Serious Tensorflow calculations use GPUs. They are infeasible on standard hardware.
+
+  - Flexibility: It's easy to scale up a calculation to make it go faster, once you're confident you're doing the right calculation.
+
+
+* Getting Started With Tensorflow
+
+Don't be intimidated!  We'll take it step by step.
+
+#+attr_html: :width 80% :style margin:0px auto;display:block
+[[./architecture.png]]
+
+** Install an ssh client
+
+- Start chrome browser.
+- Search for "firessh chrome", and click on first link.
+- Click "Add to Chrome"
+
+#+attr_html: :width 40% :style margin:0px auto;display:block
+[[https://addons.cdn.mozilla.net/user-media/previews/full/61/61412.png]]
+
+** Log into AWS and create a key
+
+- On aws.amazon.com, click on "Sign In to the Console" in the top right-hand
+  corner.
+- From the console, click on EC2 in the top left-hand corner.
+- Click on "Key Pairs", under "Network and Security" on the left-hand side.
+- Click "Create Key Pair".  Give it a name, click "Create".
+- Key is downloaded to your local hard drive. Make sure you know where it is.
+
+
+** Create a Tensorflow machine
+
+- From the EC2 console, click "Instances" on the left-hand side, then "Launch
+  Instance."
+- Choose "Community AMIs" on the left-hand side, then search for "Coventry
+  Tensorflow" in the search field.  Click "Select".
+- Type Control-F, then "GPU".  Click on "g2.2xlarge" row.
+- Click on "Review and Launch", then "Launch."
+- Choose the key you created on the last slide, check acknowledgement box, and
+  launch.
+
+
+** Connect to the Tensorflow machine
+
+- Click on the instance id ("i-<alphnumerics>"). In the bottom it will say
+  something like "Public DNS: ec2-...compute-1.amazonaws.com". Take
+  a copy of the "ec2-....amazonaws.com" address.
+
+- In chrome, go to ~chrome://apps~ and choose firessh. (Or use your own ssh
+  client if you prefer.)
+- Enter anything you like for "Account Name", the DNS address for the "Host",
+  "ubuntu" for the login, and use the "choose file" button to choose the local
+  key file you created two slides ago.
+- Click "Connect."
+
+** Start the Tensorflow container
+
+#+begin_example
+% sudo nvidia-docker run -it -p 8888:8888 -p 7777:7777 -v ~:/ec2 tfintro
+root@d6ed7524ce0e:/#
+#+end_example
+
+From here, we have a working instance of tensorflow!
+
+#+begin_example
+root@6e871713c267:/tensorflow/tensorflow/tools/docker/notebooks# python
+>>> import tensorflow  # Takes a minute or two
+>>>
+#+end_example
+
+Let's start the ipython notebook.  (**DO NOT USE THIS FOR CONFIDENTIAL WORK**)
+
+* Extra notes
+** Create AWS account
+
+(No need to read this if you already have an account)
+
+- Go to aws.amazon.com
+- Click on "Create AWS account" in top right-hand corner
+- Enter email address, click "I am a new user", click "Sign in"
+- Fill out info, click "Create account"
+- Fill out info. For "security check", don't include spaces. Click "Check here",
+  click "Create Account"
+- Fill out credit card info, click "Continue"
+- After another "security check," give a telephone number.
+- They'll call your number, enter the given code.  Click "Continue"
+- Click "Continue" again.
+- Click "Sign in to the console."
+** Create a Tensorflow machine from scratch -- EC2 instance
+
+- On aws.amazon.com, click on "Sign In to the Console" in the top right-hand
+  corner.
+- From the console, click on EC2 in the top left-hand corner.
+- Click on "Launch Instance"
+- Click on fourth "Select" button on right-hand side, for "Ubuntu Server"
+- Type Control-F, then "GPU".  Click on "g2.2xlarge" row.
+- Click on "Configure Instance Details", then "Add storage". Change size from 8
+  to 16.
+- Click on "Configure Security Group", then "Add Rule."
+- Set port to 8888 and source to "Anywhere." (Opens the firewall on port 8888.)
+  Open port 6666 in the same way.
+- Click on "Review and Launch", then "Launch."
+- Choose the key you created, check acknowledgement box, and launch
+
+** Create a Tensorflow machine from scratch -- installation
+
+- Connect to the machine as described in the main notes.
+- Run these commands:
+
+#+begin_example
+git clone https://github.com/coventry/tfintro
+cd tfintro
+sudo bash
+bash ./install.sh
+#+end_example
