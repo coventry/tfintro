@@ -58,7 +58,7 @@
   things. (But not this week.)
 
 #+attr_html: :width 75% :style margin:0px auto;display:block
-[[https://tensortalk.com/static/img_cache/combined_pieappleclose.jpg]]
+[[https://no2147483647.files.wordpress.com/2015/12/pogo-vangogh-mxnet_600px.png]]
 
 * Why run your own Tensorflow machine on AWS?
 
@@ -93,6 +93,8 @@ Don't be intimidated!  We'll take it step by step.
 
 ** Log into AWS and create a key
 
+(If you already have a key, you don't need to do this.)
+
 - On aws.amazon.com, click on "Sign In to the Console" in the top right-hand
   corner.
 - From the console, click on EC2 in the top left-hand corner.
@@ -100,17 +102,31 @@ Don't be intimidated!  We'll take it step by step.
 - Click "Create Key Pair".  Give it a name, click "Create".
 - Key is downloaded to your local hard drive. Make sure you know where it is.
 
+** Create a Tensorflow machine from scratch -- EC2 instance
 
-** Create a Tensorflow machine
-
-- From the EC2 console, click "Instances" on the left-hand side, then "Launch
-  Instance."
-- Choose "Community AMIs" on the left-hand side, then search for "Coventry
-  Tensorflow" in the search field.  Click "Select".
+- On aws.amazon.com, click on "Sign In to the Console" in the top right-hand
+  corner.
+- From the console, click on EC2 in the top left-hand corner.
+- Click on "Launch Instance"
+- Click on fourth "Select" button on right-hand side, for "Ubuntu Server"
 - Type Control-F, then "GPU".  Click on "g2.2xlarge" row.
+- Click on "Configure Instance Details", then "Add storage". Change size from 8
+  to 16.
+- Click on "Configure Security Group", then "Add Rule."
+- Set port to 8888 and source to "Anywhere." (Opens the firewall on port 8888.)
+  Open port 7777 in the same way.
 - Click on "Review and Launch", then "Launch."
-- Choose the key you created on the last slide, check acknowledgement box, and
-  launch.
+- Choose the key you created, check acknowledgement box, and launch
+
+** Make sure you know how to get rid of the machine
+
+- From the Instances console, right click on the machine. Choose "Instance
+  State". Choose "Stop" to shut the machine down. Choose "Terminate" to remove
+  the machine altogether.
+
+- While running, the machine costs 65c / hour.
+
+- While it exists, its storage costs $1.60 / month.
 
 
 ** Connect to the Tensorflow machine
@@ -126,22 +142,43 @@ Don't be intimidated!  We'll take it step by step.
   key file you created two slides ago.
 - Click "Connect."
 
+
+** Create a Tensorflow machine from scratch -- installation
+
+Run these commands:
+
+#+begin_example
+git clone https://github.com/coventry/tfintro
+cd tfintro
+sudo bash
+bash ./install.sh
+#+end_example
+
+This will take a few minutes.
+
+
 ** Start the Tensorflow container
 
 #+begin_example
-% sudo nvidia-docker run -it -p 8888:8888 -p 7777:7777 -v ~:/ec2 tfintro
+% sudo bash ./run-tensorflow.sh
 root@d6ed7524ce0e:/#
 #+end_example
 
 From here, we have a working instance of tensorflow!
 
+Let's start the ipython notebook.
+
+(**HIGHLY INSECURE!! DO NOT USE THIS FOR CONFIDENTIAL WORK**)
+
 #+begin_example
-root@6e871713c267:/tensorflow/tensorflow/tools/docker/notebooks# python
->>> import tensorflow  # Takes a minute or two
->>>
+# cd /tensorflow/tensorflow/tools/docker/notebooks/
+# jupyter-notebook
 #+end_example
 
-Let's start the ipython notebook.  (**DO NOT USE THIS FOR CONFIDENTIAL WORK**)
+Now browse to ec2-....amazonaws.com:8888, where ec2-... is the address of your
+machine.
+
+[[./hellotensorflow.png]]
 
 * Extra notes
 ** Create AWS account
@@ -159,30 +196,3 @@ Let's start the ipython notebook.  (**DO NOT USE THIS FOR CONFIDENTIAL WORK**)
 - They'll call your number, enter the given code.  Click "Continue"
 - Click "Continue" again.
 - Click "Sign in to the console."
-** Create a Tensorflow machine from scratch -- EC2 instance
-
-- On aws.amazon.com, click on "Sign In to the Console" in the top right-hand
-  corner.
-- From the console, click on EC2 in the top left-hand corner.
-- Click on "Launch Instance"
-- Click on fourth "Select" button on right-hand side, for "Ubuntu Server"
-- Type Control-F, then "GPU".  Click on "g2.2xlarge" row.
-- Click on "Configure Instance Details", then "Add storage". Change size from 8
-  to 16.
-- Click on "Configure Security Group", then "Add Rule."
-- Set port to 8888 and source to "Anywhere." (Opens the firewall on port 8888.)
-  Open port 6666 in the same way.
-- Click on "Review and Launch", then "Launch."
-- Choose the key you created, check acknowledgement box, and launch
-
-** Create a Tensorflow machine from scratch -- installation
-
-- Connect to the machine as described in the main notes.
-- Run these commands:
-
-#+begin_example
-git clone https://github.com/coventry/tfintro
-cd tfintro
-sudo bash
-bash ./install.sh
-#+end_example
