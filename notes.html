@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Tensorflow: A Practical Introduction</title>
+<meta name="author" content="(Alex Coventry)"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="./reveal.js/css/reveal.css"/>
+
+<link rel="stylesheet" href="./reveal.js/css/theme/moon.css" id="theme"/>
+
+<link rel="stylesheet" href="./local.css"/>
+
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = './reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+<meta name="description" content="Tensorflow Introduction.">
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h1 class="title">Tensorflow: A Practical Introduction</h1><h2 class="author">Alex Coventry</h2><p class="date">Created: 2016-11-17 Thu 16:32</p>
+</section>
+<section id="table-of-contents">
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#/slide-orgheadline1">What is Deep Learning?</a></li>
+<li><a href="#/slide-orgheadline2">What is Tensorflow?</a></li>
+<li><a href="#/slide-orgheadline3">What's the goal of this meetup group?</a></li>
+<li><a href="#/slide-orgheadline4">Why run your own Tensorflow machine on AWS?</a></li>
+<li><a href="#/slide-orgheadline9">Getting Started With Tensorflow</a></li>
+<li><a href="#/slide-orgheadline13">Extra notes</a></li>
+</ul>
+</div>
+</div>
+</section>
+
+<section>
+<section id="slide-orgheadline1">
+<h2 id="orgheadline1">What is Deep Learning?</h2>
+<ul>
+<li>Automatically learning implicit representations from training data.</li>
+<li>Layering increasingly abstract representations on top of each other.</li>
+
+</ul>
+
+
+<div class="figure">
+<p><img src="./cnn_filters.png" alt="cnn_filters.png" width="75%" style="margin:0px auto;display:block" />
+</p>
+</div>
+
+<p style="font-size:small">
+(<a href="http://www.iro.umontreal.ca/~bengioy/talks/DL-Tutorial-NIPS2015.pdf" style="font-size:small">http://www.iro.umontreal.ca/~bengioy/talks/DL-Tutorial-NIPS2015.pdf</a>)
+</p>
+
+
+</section>
+</section>
+<section>
+<section id="slide-orgheadline2">
+<h2 id="orgheadline2">What is Tensorflow?</h2>
+<ul>
+<li>A Python library for Machine Learning which emphasizes Deep Learning models.</li>
+
+<li><a href="http://playground.tensorflow.org/#activation=tanh&amp;batchSize=10&amp;dataset=circle&amp;regDataset=reg-plane&amp;learningRate=0.03&amp;regularizationRate=0&amp;noise=0&amp;networkShape=3,2&amp;seed=0.35219&amp;showTestData=true&amp;discretize=false&amp;percTrainData=50&amp;x=true&amp;y=true&amp;xTimesY=false&amp;xSquared=false&amp;ySquared=false&amp;cosX=false&amp;sinX=false&amp;cosY=false&amp;sinY=false&amp;collectStats=false&amp;problem=classification&amp;initZero=false&amp;hideText=false">Example</a>.</li>
+
+<li>A large suite of optimization algorithms and statistical tools.</li>
+
+<li>Environment-agnostic notation for large classes of ML-related calculations:
+Same program can run on a single CPU, a cluster, or a GPU, with minor
+adjustments.</li>
+
+<li><span class="underline">Tensor</span>flow because many calculations are linear, so represented by tensors
+(multi-dimensional arrays of numbers.)</li>
+
+<li>Tensor<i>flow</i> because information flows from one layer to the next (forwards
+and backwards) via the tensors.</li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-orgheadline3">
+<h2 id="orgheadline3">What's the goal of this meetup group?</h2>
+<ul>
+<li>Practical demonstrations of how to use Tensorflow for Deep Learning.</li>
+
+<li>The goal is that you should be able to run the demostrations yourself, and
+play with them to learn more.</li>
+
+<li>In the end, we should be able to make our own images like this, among other
+things. (But not this week.)</li>
+
+</ul>
+
+
+<div class="figure">
+<p><img src="https://tensortalk.com/static/img_cache/combined_pieappleclose.jpg" alt="combined_pieappleclose.jpg" width="75%" style="margin:0px auto;display:block" />
+</p>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-orgheadline4">
+<h2 id="orgheadline4">Why run your own Tensorflow machine on AWS?</h2>
+<ul>
+<li>Costs
+
+<ul>
+<li>Financial: At least 65c/hour, plus a few dollars a month for storage.</li>
+
+<li>Time / Complexity: You have to learn a few moving parts, and keep them in sync.</li>
+
+</ul></li>
+
+<li>Benefits
+
+<ul>
+<li>Main issue is hardware: Serious Tensorflow calculations use GPUs. They are infeasible on standard hardware.</li>
+
+<li>Flexibility: It's easy to scale up a calculation to make it go faster, once you're confident you're doing the right calculation.</li>
+
+</ul></li>
+
+</ul>
+
+
+</section>
+</section>
+<section>
+<section id="slide-orgheadline9">
+<h2 id="orgheadline9">Getting Started With Tensorflow</h2>
+<p>
+Don't be intimidated!  We'll take it step by step.
+</p>
+
+
+<div class="figure">
+<p><img src="./architecture.png" alt="architecture.png" width="80%" style="margin:0px auto;display:block" />
+</p>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-orgheadline5">
+<h3 id="orgheadline5">Install an ssh client</h3>
+<ul>
+<li>Start chrome browser.</li>
+<li>Search for "firessh chrome", and click on first link.</li>
+<li>Click "Add to Chrome"</li>
+
+</ul>
+
+
+<div class="figure">
+<p><img src="https://addons.cdn.mozilla.net/user-media/previews/full/61/61412.png" alt="61412.png" width="40%" style="margin:0px auto;display:block" />
+</p>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-orgheadline6">
+<h3 id="orgheadline6">Log into AWS and create a key</h3>
+<ul>
+<li>On aws.amazon.com, click on "Sign In to the Console" in the top right-hand
+corner.</li>
+<li>From the console, click on EC2 in the top left-hand corner.</li>
+<li>Click on "Key Pairs", under "Network and Security" on the left-hand side.</li>
+<li>Click "Create Key Pair".  Give it a name, click "Create".</li>
+<li>Key is downloaded to your local hard drive. Make sure you know where it is.</li>
+
+</ul>
+
+
+</section>
+</section>
+<section>
+<section id="slide-orgheadline7">
+<h3 id="orgheadline7">Create a Tensorflow machine</h3>
+<ul>
+<li>From the EC2 console, click "Instances" on the left-hand side, then "Launch
+Instance."</li>
+<li>Choose "Community AMIs" on the left-hand side, then search for "Coventry
+Tensorflow" in the search field.  Click "Select".</li>
+<li>Type Control-F, then "GPU".  Click on "g2.2xlarge" row.</li>
+<li>Click on "Review and Launch", then "Launch."</li>
+<li>Choose the key you created on the last slide, check acknowledgement box, and
+launch.</li>
+
+</ul>
+
+
+</section>
+</section>
+<section>
+<section id="slide-orgheadline8">
+<h3 id="orgheadline8">Connect to the Tensorflow machine</h3>
+<ul>
+<li>Click on the instance id ("i-&lt;alphnumerics&gt;"). In the bottom it will say
+something like "Public DNS: ec2-&#x2026;compute-1.amazonaws.com". Take
+a copy of the "ec2-&#x2026;.amazonaws.com" address.</li>
+
+<li>In chrome, go to <code>chrome://apps</code> and choose firessh. (Or use your own ssh
+client if you prefer.)</li>
+<li>Enter anything you like for "Account Name", the DNS address for the "Host",
+"ubuntu" for the login, and use the "choose file" button to choose the local
+key file you created two slides ago.</li>
+<li>Click "Connect."</li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-orgheadline13">
+<h2 id="orgheadline13">Extra notes</h2>
+<div class="outline-text-2" id="text-orgheadline13">
+</div></section>
+</section>
+<section>
+<section id="slide-orgheadline10">
+<h3 id="orgheadline10">Create a Tensorflow machine from scratch &#x2013; EC2 instance</h3>
+<ul>
+<li>On aws.amazon.com, click on "Sign In to the Console" in the top right-hand
+corner.</li>
+<li>From the console, click on EC2 in the top left-hand corner.</li>
+<li>Click on "Launch Instance"</li>
+<li>Click on fourth "Select" button on right-hand side, for "Ubuntu Server"</li>
+<li>Type Control-F, then "GPU".  Click on "g2.2xlarge" row.</li>
+<li>Click on "Configure Instance Details", then "Add storage". Change size from 8
+to 16.</li>
+<li>Click on "Configure Security Group", then "Add Rule."</li>
+<li>Set port to 8888 and source to "Anywhere." (Opens the firewall on port 8888.)
+Open port 6666 in the same way.</li>
+<li>Click on "Review and Launch", then "Launch."</li>
+<li>Choose the key you created, check acknowledgement box, and launch</li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-orgheadline11">
+<h3 id="orgheadline11">Create a Tensorflow machine from scratch &#x2013; installation</h3>
+<ul>
+<li>Connect to the machine as described in the main notes.</li>
+<li><p>
+Run these commands:
+</p>
+
+<p>
+<code>git clone https://github.com/coventry/tfintro</code>
+</p>
+
+<p>
+<code>cd tfintro</code>
+</p>
+
+<p>
+<code>sudo bash</code>
+</p>
+
+<p>
+<code>bash ./install.sh</code>
+</p></li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-orgheadline12">
+<h3 id="orgheadline12">Create AWS account</h3>
+<p>
+(No need to read this if you already have an account)
+</p>
+
+<ul>
+<li>Go to aws.amazon.com</li>
+<li>Click on "Create AWS account" in top right-hand corner</li>
+<li>Enter email address, click "I am a new user", click "Sign in"</li>
+<li>Fill out info, click "Create account"</li>
+<li>Fill out info. For "security check", don't include spaces. Click "Check here",
+click "Create Account"</li>
+<li>Fill out credit card info, click "Continue"</li>
+<li>After another "security check," give a telephone number.</li>
+<li>They'll call your number, enter the given code.  Click "Continue"</li>
+<li>Click "Continue" again.</li>
+<li>Click "Sign in to the console."</li>
+
+</ul>
+</section>
+</section>
+</div>
+</div>
+<p> Created by Alex Coventry. </p>
+<script src="./reveal.js/lib/js/head.min.js"></script>
+<script src="./reveal.js/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: true,
+slideNumber: 'c',
+rollingLinks: true,
+keyboard: true,
+overview: true,
+width: 1200,
+height: 800,
+margin: 0.10,
+minScale: 0.50,
+maxScale: 2.50,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'cube', // default/cube/page/concave/zoom/linear/fade/none
+transitionSpeed: 'default',
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: './reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: './reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: './reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+});
+</script>
+</body>
+</html>
