@@ -28,7 +28,7 @@
 <body>
 <div class="reveal">
 <div class="slides">
-<section id="sec-title-slide"><h1 class="title">Tensorflow: A Practical Introduction</h1><h2 class="author">Alex Coventry</h2><p class="date">Created: 2016-11-17 Thu 17:45</p>
+<section id="sec-title-slide"><h1 class="title">Tensorflow: A Practical Introduction</h1><h2 class="author">Alex Coventry</h2><p class="date">Created: 2017-01-11 Wed 16:25</p>
 </section>
 <section id="table-of-contents">
 <div id="table-of-contents">
@@ -37,10 +37,15 @@
 <ul>
 <li><a href="#/slide-orgheadline1">What is Deep Learning?</a></li>
 <li><a href="#/slide-orgheadline2">What is Tensorflow?</a></li>
-<li><a href="#/slide-orgheadline3">What's the goal of this meetup group?</a></li>
-<li><a href="#/slide-orgheadline4">Why run your own Tensorflow machine on AWS?</a></li>
-<li><a href="#/slide-orgheadline12">Getting Started With Tensorflow</a></li>
-<li><a href="#/slide-orgheadline14">Extra notes</a></li>
+<li><a href="#/slide-orgheadline3">The goal of this meetup</a></li>
+<li><a href="#/slide-orgheadline13">Getting Started With Tensorflow</a></li>
+<li><a href="#/slide-orgheadline14">InfoGAN</a></li>
+<li><a href="#/slide-orgheadline15">Tensorboard</a></li>
+<li><a href="#/slide-orgheadline16">Tensorboard</a></li>
+<li><a href="#/slide-orgheadline17">Tensorboard</a></li>
+<li><a href="#/slide-orgheadline18">How InfoGAN works</a></li>
+<li><a href="#/slide-orgheadline19">Finer-grained architecture</a></li>
+<li><a href="#/slide-orgheadline21">Extra notes</a></li>
 </ul>
 </div>
 </div>
@@ -82,10 +87,10 @@
 Same program can run on a single CPU, a cluster, or a GPU, with minor
 adjustments.</li>
 
-<li><span class="underline">Tensor</span>flow because many calculations are linear, so represented by tensors
+<li><i>Tensor</i> flow because many calculations are linear, so represented by tensors
 (multi-dimensional arrays of numbers.)</li>
 
-<li>Tensor<i>flow</i> because information flows from one layer to the next (forwards
+<li>Tensor/flow/ because information flows from one layer to the next (forwards
 and backwards) via the tensors.</li>
 
 </ul>
@@ -94,71 +99,64 @@ and backwards) via the tensors.</li>
 </section>
 <section>
 <section id="slide-orgheadline3">
-<h2 id="orgheadline3">What's the goal of this meetup group?</h2>
+<h2 id="orgheadline3">The goal of this meetup</h2>
 <ul>
 <li>Practical demonstrations of how to use Tensorflow for Deep Learning.</li>
 
-<li>The goal is that you should be able to run the demostrations yourself, and
-play with them to learn more.</li>
+<li>Learn how to access the hardware and tools needed for serious experimentation
+elaborate neural nets.</li>
 
-<li>In the end, we should be able to make our own images like this, among other
-things. (But not this week.)</li>
+<li>Learn to run the demonstrations yourself, and play with them to learn more.</li>
+
+<li>If you run into a problem, speak up!</li>
+
+<li>But time is short, so we may have to cut our losses and move on. Don't worry,
+the slides will be available, and you can work through them on your own later.</li>
 
 </ul>
 
 
 <div class="figure">
-<p><img src="https://no2147483647.files.wordpress.com/2015/12/pogo-vangogh-mxnet_600px.png" alt="pogo-vangogh-mxnet_600px.png" width="75%" style="margin:0px auto;display:block" />
+<p><img src="https://cdn-images-1.medium.com/max/800/1*_91Ir1B68lDv_8kSRHa9bg.jpeg" alt="1*_91Ir1B68lDv_8kSRHa9bg.jpeg" width="75%" style="margin:0px auto;display:block" />
 </p>
 </div>
+
+
+</section>
+</section>
+<section>
+<section id="slide-orgheadline13">
+<h2 id="orgheadline13">Getting Started With Tensorflow</h2>
+<p>
+Don't be intimidated!  We'll take it step by step.
+</p>
+
+<p>
+But to get serious work done, you need specialized hardware. We'll start by
+showing you how to access it.
+</p>
+
+<p>
+This is a bit involved, but once you've figured it out you'll be able to work on
+neural nets independently!
+</p>
+
+<p>
+Amazon offers a <a href="https://aws.amazon.com/marketplace/pp/B01M0AXXQB">Deep Learning AMI</a> which you can start with a single click. I
+have found it slow to start up, but it may simpler to use at first.
+</p>
+
 
 </section>
 </section>
 <section>
 <section id="slide-orgheadline4">
-<h2 id="orgheadline4">Why run your own Tensorflow machine on AWS?</h2>
-<ul>
-<li>Costs
-
-<ul>
-<li>Financial: At least 65c/hour, plus a few dollars a month for storage.</li>
-
-<li>Time / Complexity: You have to learn a few moving parts, and keep them in sync.</li>
-
-</ul></li>
-
-<li>Benefits
-
-<ul>
-<li>Main issue is hardware: Serious Tensorflow calculations use GPUs. They are infeasible on standard hardware.</li>
-
-<li>Flexibility: It's easy to scale up a calculation to make it go faster, once you're confident you're doing the right calculation.</li>
-
-</ul></li>
-
-</ul>
-
-
-</section>
-</section>
-<section>
-<section id="slide-orgheadline12">
-<h2 id="orgheadline12">Getting Started With Tensorflow</h2>
+<h3 id="orgheadline4">Install firessh</h3>
 <p>
-Don't be intimidated!  We'll take it step by step.
+If you already have an ssh client and know how to use it with a keyfile, you
+don't need to do this.
 </p>
 
-
-<div class="figure">
-<p><img src="./architecture.png" alt="architecture.png" width="80%" style="margin:0px auto;display:block" />
-</p>
-</div>
-
-</section>
-</section>
-<section>
-<section id="slide-orgheadline5">
-<h3 id="orgheadline5">Install an ssh client</h3>
 <ul>
 <li>Start chrome browser.</li>
 <li>Search for "firessh chrome", and click on first link.</li>
@@ -175,6 +173,24 @@ Don't be intimidated!  We'll take it step by step.
 </section>
 </section>
 <section>
+<section id="slide-orgheadline5">
+<h3 id="orgheadline5">Check whether you have the right AWS permissions</h3>
+<ul>
+<li>On aws.amazon.com, click on "Sign In to the Console" in the top right-hand
+corner.</li>
+<li>From the console, click on EC2 in the top left-hand corner.</li>
+<li>Click on "Limits"</li>
+<li>Search forwards (Control-F/Command-F) for "g2.2xlarge").</li>
+<li>The value should be greater than 0.</li>
+<li>If not, you can request a limit increase.</li>
+<li>Other, more powerful instance types: g2.8xlarge, p2.* instances</li>
+
+</ul>
+
+
+</section>
+</section>
+<section>
 <section id="slide-orgheadline6">
 <h3 id="orgheadline6">Log into AWS and create a key</h3>
 <p>
@@ -182,9 +198,6 @@ Don't be intimidated!  We'll take it step by step.
 </p>
 
 <ul>
-<li>On aws.amazon.com, click on "Sign In to the Console" in the top right-hand
-corner.</li>
-<li>From the console, click on EC2 in the top left-hand corner.</li>
 <li>Click on "Key Pairs", under "Network and Security" on the left-hand side.</li>
 <li>Click "Create Key Pair".  Give it a name, click "Create".</li>
 <li>Key is downloaded to your local hard drive. Make sure you know where it is.</li>
@@ -254,12 +267,35 @@ key file you created two slides ago.</li>
 </section>
 <section>
 <section id="slide-orgheadline10">
-<h3 id="orgheadline10">Create a Tensorflow machine from scratch &#x2013; installation</h3>
+<h3 id="orgheadline10">Starting a machine through coventry.systems</h3>
+<ul>
+<li>Go to <a href="https://coventry.systems">https://coventry.systems</a>.</li>
+<li>Enter the 12-digit token you bought, or pay by credit card ($6).</li>
+<li>Enter a password (all digits and numbers)</li>
+<li>Re-enter password, enter name &amp; email.</li>
+<li>Hit submit</li>
+
+</ul>
+
+<pre class="example">
+Machine State: Running
+Hostname: ec2-54-211-250-185.compute-1.amazonaws.com
+Username: ubuntu
+Password: The one you provided
+</pre>
+
+
+</section>
+</section>
+<section>
+<section id="slide-orgheadline11">
+<h3 id="orgheadline11">Installation</h3>
 <p>
 Run these commands:
 </p>
 
 <pre class="example">
+tmux
 git clone https://github.com/coventry/tfintro
 cd tfintro
 sudo bash
@@ -274,8 +310,8 @@ This will take a few minutes.
 </section>
 </section>
 <section>
-<section id="slide-orgheadline11">
-<h3 id="orgheadline11">Start the Tensorflow container</h3>
+<section id="slide-orgheadline12">
+<h3 id="orgheadline12">Start the Tensorflow container</h3>
 <pre class="example">
 % sudo bash ./run-tensorflow.sh
 root@d6ed7524ce0e:/#
@@ -294,6 +330,7 @@ Let's start the ipython notebook.
 </p>
 
 <pre class="example">
+# tmux
 # cd /tensorflow/tensorflow/tools/docker/notebooks/
 # jupyter-notebook
 </pre>
@@ -301,6 +338,11 @@ Let's start the ipython notebook.
 <p>
 Now browse to ec2-&#x2026;.amazonaws.com:8888, where ec2-&#x2026; is the address of your
 machine.
+</p>
+
+<p>
+These notebooks are a very useful introduction to tensorflow. Only the last one
+really needs a GPU.
 </p>
 
 
@@ -313,13 +355,105 @@ machine.
 </section>
 <section>
 <section id="slide-orgheadline14">
-<h2 id="orgheadline14">Extra notes</h2>
-<div class="outline-text-2" id="text-orgheadline14">
+<h2 id="orgheadline14">InfoGAN</h2>
+<p>
+Back to the ssh terminal. Type "Control-B Control-B C" to open a new shell in the
+docker container.  ("Control-B C" would open one on the host.)
+</p>
+
+<p>
+Then type the following:
+</p>
+
+<pre class="example">
+git clone https://github.com/coventry/InfoGAN
+cd InfoGAN
+PYTHONPATH=. python launchers/run_mnist_exp.py
+</pre>
+
+<p>
+Then "Control-B Control-B C" for yet another shell, and
+</p>
+
+<pre class="example">
+tensorboard --port 7777 --logdir mnist/
+</pre>
+
+</section>
+</section>
+<section>
+<section id="slide-orgheadline15">
+<h2 id="orgheadline15">Tensorboard</h2>
+
+<div class="figure">
+<p><img src="tensorboard-images.png" alt="tensorboard-images.png" width="100%" style="margin:0px auto;display:block" />
+</p>
+</div>
+
+
+</section>
+</section>
+<section>
+<section id="slide-orgheadline16">
+<h2 id="orgheadline16">Tensorboard</h2>
+
+<div class="figure">
+<p><img src="tensorboard-events.png" alt="tensorboard-events.png" width="100%" style="margin:0px auto;display:block" />
+</p>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-orgheadline17">
+<h2 id="orgheadline17">Tensorboard</h2>
+
+<div class="figure">
+<p><img src="tensorboard-graphs.png" alt="tensorboard-graphs.png" width="100%" style="margin:0px auto;display:block" />
+</p>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-orgheadline18">
+<h2 id="orgheadline18">How InfoGAN works</h2>
+
+<div class="figure">
+<p><img src="infogan-architecture.png" alt="infogan-architecture.png" width="30%" style="margin:0px auto;display:block" />
+</p>
+</div>
+
+<p>
+(From buriburisuri/ac-gan)
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-orgheadline19">
+<h2 id="orgheadline19">Finer-grained architecture</h2>
+
+<div class="figure">
+<p><img src="dcgan_network.png" alt="dcgan_network.png" />
+</p>
+</div>
+
+<p>
+(<a href="http://www.derinogrenme.com/tag/zeynep-akata/">http://www.derinogrenme.com/tag/zeynep-akata/</a>)
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-orgheadline21">
+<h2 id="orgheadline21">Extra notes</h2>
+<div class="outline-text-2" id="text-orgheadline21">
 </div></section>
 </section>
 <section>
-<section id="slide-orgheadline13">
-<h3 id="orgheadline13">Create AWS account</h3>
+<section id="slide-orgheadline20">
+<h3 id="orgheadline20">Create AWS account</h3>
 <p>
 (No need to read this if you already have an account)
 </p>
