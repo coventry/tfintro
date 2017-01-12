@@ -221,7 +221,7 @@ Then type the following:
 
 Then "Control-B Control-B C" for yet another shell, and
 
-: tensorboard --port 7777 --logdir mnist/
+: tensorboard --port 7777 --logdir logs/mnist
 
 * Tensorboard
 
