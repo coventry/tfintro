@@ -217,6 +217,7 @@ Then type the following:
 
 : git clone https://github.com/coventry/InfoGAN
 : cd InfoGAN
+: pip install -r requirements.txt
 : PYTHONPATH=. python launchers/run_mnist_exp.py
 
 Then "Control-B Control-B C" for yet another shell, and
