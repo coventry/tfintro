@@ -10,7 +10,7 @@
 #+REVEAL_MIN_SCALE: 0.5
 #+REVEAL_MAX_SCALE: 2.5
 #+REVEAL_TRANS: cube
-#+REVEAL_THEME: moon
+#+REVEAL_THEME: white
 #+REVEAL_HLEVEL: 2
 #+REVEAL_HEAD_PREAMBLE: <meta name="description" content="Tensorflow Introduction.">
 #+REVEAL_POSTAMBLE: <p> Created by Alex Coventry. </p>
@@ -222,7 +222,7 @@ Then type the following:
 
 Then "Control-B Control-B C" for yet another shell, and
 
-: tensorboard --port 7777 --logdir mnist/
+: tensorboard --port 7777 --logdir logs/mnist
 
 * Tensorboard
 
