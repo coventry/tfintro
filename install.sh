@@ -14,8 +14,8 @@ sudo add-apt-repository -y ppa:graphics-drivers/ppa
 sudo apt-get update
 
 # Install NVIDIA drivers and docker
-sudo apt-get install -y -f docker-engine ubuntu-drivers-common nvidia-370 \
-        nvidia-modprobe
+sudo apt-get install -y -f docker-engine='1.12.0-0~xenial' \
+     ubuntu-drivers-common nvidia-370 nvidia-modprobe
 
 sudo apt-get install -y emacs24-nox
 
